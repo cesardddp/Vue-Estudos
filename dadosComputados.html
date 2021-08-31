@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue-Teste</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<header>
+    <iframe src="./nav.html" frameborder="0" height="40px" width="100%"></iframe>
+</header>
+<body>
+    <div id="example">
+        <input v-model="mensagem">
+        <p>Mensagem original: "{{mensagem}}"</p>
+        <p>Mensagem ao contrário: "{{mensagemAoContrario}}"</p>
+
+        <h3>cache de computed vs métodos</h3>
+        <b>a diferença é que dados computados são cacheados de acordo com suas dependências reativas</b>
+        ou seja, o valor de retorno é cacheado e só é recalculado quando uma das dependencias for alterada, isto é, quando valor de mensagem for alterado
+        <p>Mensagem ao contrário (usando chamada de método) "{{mensagemAoContrarioMeth()}}"</p>
+        
+        <h3>dados computados vs. observadores (watchers)</h3>
+        exemplo de uso excessivo de watchers para alterar um valor em dependencia de outros, sendo que este valor poderia ser simplesmente uma propriedade computada
+    </div>
+    <div id="getset">
+        <h3>atribuição em dados computados</h3>
+        setters
+        é possivel definifir getter e setter para um dado computado
+        <br>
+        <input v-model="fullname">
+        <p>{{fullname}}</p>
+    </div>
+    <div id="observadores">
+        <h3>Obsevadores</h3>
+        <p>Enquanto dados computados são mais adequados na maioria dos casos, há 
+            momentos em que um observador personalizado é necessário. Por isso 
+            o Vue fornece uma maneira mais genérica para reagir a alterações de 
+            dados, o watch. Isto é particularmente útil quando se precisa 
+            executar operações assíncronas ou operações complexas antes de 
+            responder a uma alteração de dados.</p>
+    </div>
+
+
+        
+    <script>
+    var vm = new Vue({
+        el: '#example',
+        data: {
+            mensagem: 'Olá Vue'
+        },
+        methods: {
+            mensagemAoContrarioMeth: function () {
+                return this.mensagem.split('').reverse().join('')
+            }
+        },
+        computed: {
+            mensagemAoContrario:function () {
+                return this.mensagem.split('').reverse().join('')
+            }
+        }
+    })
+    var vm2 = new Vue({
+    el:'#getset',
+    data:{
+        name:"cesar",
+        lastName:"m oliveira"
+    },
+    computed:{
+        fullname:{
+            get: function () {
+                return this.name+' '+this.lastName
+            },
+            set: function (novoValor) {
+                var names = novoValor.split(' ')
+                // debugger;
+                this.name = names.shift()
+                // debugger;
+                this.lastName = names.join(' ')
+            }
+        }
+    }
+})
+    var observadores = new Vue({
+        el:'#observadores',
+        data
+    })
+    </script>
+</body>

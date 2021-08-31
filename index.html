@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue-Teste</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<header>
+    <iframe src="./nav.html" frameborder="0" height="40px" width="100%"></iframe>
+</header>
+<body>
+    <div id="app">
+        {{mensagem}}
+        <br>
+        <span v-bind:title="mensagem2">
+            passe o mouse e nada acontece
+        </span>
+        <p v-if="seen">Agora você me viu</p>
+        <ol>
+            <li v-for="todo in todos">
+                {{todo.text}}
+            </li>
+        </ol>
+        <p>{{mensagem}}</p>
+        <button @click="reverseMessage">Inverter</button>
+        <input v-model="mensagem">
+        <hr>
+        <ol>
+            <!-- v-bind:todo="comida" -->
+            <todo-item
+
+             v-for="comida in comidas"
+             :todoo="comida"
+             :var_teste="teste_var"
+             :id="comida.id"
+
+            ></todo-item>
+        </ol>
+   
+    </div>
+    <script>
+        var obj = {
+        foo: 'bar'
+    }
+        Vue.component('todo-item', {
+            props:['todoo','var_teste'],
+            template: '<li>{{ todoo.text + " - " + var_teste }}</li>'
+        })
+        Vue.component('todo-item', {
+       
+            data: obj,
+        
+            props:['todoo','var_teste'],
+            template: '<li>{{ todoo.text + " - " + var_teste }}</li>'
+        })
+        var app = new Vue({
+            el: '#app',
+            data: {
+                mensagem: 'Olá Vue!',
+                mensagem2:'Vc carregou essa pagina em '+ new Date().toLocaleDateString(),
+                seen: true,
+                todos:[
+                    { text:"teste texto" },
+                    { text:"teste texto" },
+                    { text:"teste texto" },
+                ],
+                teste_var:"isso é comida",
+                comidas:[
+                    {id:0,text:"bolacha"},
+                    {id:0,text:"cereja"},
+                    {id:0,text:"biscoito"}
+                ]
+            },
+            methods: {
+                reverseMessage: function () {
+                    this.mensagem = this.mensagem.split('').reverse().join('')
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue-Teste</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<header>
+    <iframe src="./nav.html" frameborder="0" height="40px" width="100%"></iframe>
+</header>
+<body>
+    <div id="app">
+       <span> {{msg}} </span>   
+       <br>     
+       <span v-once> {{msgOnce}} </span> 
+       <br>
+       <button @click="msg=msg+'-inc';msgOnce=msgOnce+'-inc'">troca os dois</button>       
+       <h3>atributos</h3>
+       <div :id="dynaId">{{dynaId}}</div>
+       <div  :hidden="showItem">{{showItem}}</div>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {msg:"mensagem",
+            msgOnce:"não troca",
+            dynaId:1,
+            showItem:true
+        }
+        })
+    </script>
+</body>
+
+</html>
