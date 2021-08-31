@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interligações de Classe e Estilo</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<header>
+    <iframe src="./nav.html" frameborder="0" height="40px" width="100%"></iframe>
+</header>
+<body>
+    <h2>Binding HTML Classes</h2>
+    <h3>Sintaxe do Objeto</h3>
+    <div id="exemplo1">
+        <div v-bind:class="{active:isActive}">is active p class</div>
+    </div>
+    <div id="exemplo2">
+        <div
+        class = "static"    
+        v-bind:class="{active:isActive,'text-danger':hasError}">div class example 2</div>
+    </div>
+    <div id="exemplo3">
+        <div
+        :class="objetoClasse">exemplo 3 objeto vinculado fora do template</div>
+    </div>
+    <div id="exemplo4">
+        <div
+        :class="objetoClasse">exemplo 4 objeto vinculado de dado computado</div>
+    </div>
+
+    <h3>Sintaxe de Array</h3>
+    <div id="exemplo5">
+        <div
+        :class=[classeAtiva,erroClasse]>exemplo5 array classes</div>
+    </div>
+    
+    <h3>Em Components</h3>
+    <div id="exemplo6">
+        <meu-componente class="baaz boo"></meu-componente>
+        <meu-componente :class="{active:isActive}"></meu-componente>
+    </div>
+
+    <h2>Interligando Estilos Inline</h2>
+    <h3>Sintaxe de Objeto</h3>
+    <div id="exemplo7">
+        <div :style="objetoStyle">
+            Texto do exemplo7 sobre estilos 
+        </div>  
+    </div>
+    <h3>Sintaxe de Array</h3>
+    <div id="exemplo8">
+        <div :style="[baseEstilos,estilosSobrescritos]">
+            Texto do exemplo8 sintaxe de array
+        </div>  
+    </div>
+
+    <script>
+    var exemplo1 = new Vue({
+        el:'#exemplo1',
+        data:{
+            isActive:true
+        }
+    })
+    var exemplo2 = new Vue({
+        el:'#exemplo2',
+        data:{
+            isActive:true,
+            hasError:false
+        }
+    })
+    var exemplo3 = new Vue({
+        el:'#exemplo3',
+        data:{
+            objetoClasse:{
+                active: true,
+                'text-danger':false,
+                text:true
+            }
+        }
+    })
+    var exemplo4 = new Vue({
+        el:'#exemplo4',
+        data:{
+                isActive: true,
+                error:null,
+            },
+        computed: {
+            objetoClasse: function () {
+                return {
+                    active: this.isActive && !this.error,
+                    'text-danger': this.error && this.error.type === 'fatal'
+                }
+            }
+        }
+        
+    })
+    var exemplo5 = new Vue({
+        el:'#exemplo5',
+        data:{
+            classeAtiva:'active',
+            erroClasse:'text-danger'
+        }
+    })
+    
+    Vue.component('meu-componente',{
+        template:'<p class="foo bar">Oi exemplo 6 componente</p>'
+    })
+    var exemplo6 = new Vue({
+        el:'#exemplo6',
+        data:{
+            isActive:true
+        }
+    })
+    var exemplo7 = new Vue({
+        el:'#exemplo7',
+        data: {
+            objetoStyle:{
+                color:"green",
+                fontSize:'18px'
+            }
+        }
+
+    })
+    var exemplo8 = new Vue({
+        el:'#exemplo8',
+        data: {
+            baseEstilos:{
+                color:"green",
+                fontSize:'18px'
+            },
+            estilosSobrescritos:{
+                "background-color":"pink",
+                fontSize:'20px'
+
+            }
+        }
+    })
+    </script>
+</body>
+</html>
