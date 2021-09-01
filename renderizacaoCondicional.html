@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renderização Condicional</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<header>
+    <iframe src="./nav.html" frameborder="0" height="40px" width="100%"></iframe>
+</header>
+<body>
+    <div id="exemplo1">
+        <h1 v-if="legal_pra_carai">Renderização Condicional</h1>
+        <h1 v-else>Ops cabra</h1>
+    </div>
+    <div id="exemplo2">
+        <template v-if="mostrar_bloco">
+            <h1>titulo</h1>
+            <p>paragrafo 1</p>
+            <p>testparagrafo 2</p>
+        </template>
+    </div>
+    <div id="exemplo3">
+        <h3>v-else</h3>
+        <template v-if="Math.random() > 0.5">
+            <h1>agora</h1>
+            <p>você</p>
+            <p>me vê</p>
+        </template>
+        <template v-else>
+            Agora Você não vê
+        </template>
+    </div>
+    <div id="exemplo4">
+        <h3>v-else-if</h3>
+        <div v-if="type === 'A'">
+            A
+        </div>
+        <div v-else-if="type === 'B'">
+            B
+        </div>
+        <div v-else-if="type === 'C'">
+            C
+        </div>
+        <div v-else>
+            Ñ é nem a nem bi nem c#
+        </div>
+        
+    </div>
+    <div id="exemplo5">
+        <template v-if="loginType === 'username'">
+            <label>usuário</label>
+            <input placeholder="Informe usuario">
+        </template>
+        <template v-else>
+            <label>email</label>
+            <input placeholder="Informe EMAIL">
+        </template>
+        <br>
+        
+        <br>
+        <template v-if="loginType === 'username'" >
+            <label>usuário</label>
+            <input placeholder="Informe usuario" key="username-input">
+        </template> 
+        <template v-else>
+            <label>email</label>
+            <input placeholder="Informe EMAIL" key="email-input">
+        </template> exemplo sem reutilização (com elemnto key)
+        <br>
+        <button @click="troca_tipo">Troca tipo login</button>
+    </div>
+    <div id="exemplo6">
+        <h3 v-show="ok">oi sou o a diretiva v-show</h3>
+        <span>De modo geral, v-if tem custo maior durante alternâncias de visibilidade, enquanto v-show tem custo maior na renderização inicial. Então prefira v-show se precisar alternar a visibilidade de algo com muita frequência; e prefira v-if se a condição não tem tanta probabilidade de se modificar durante a execução.</span>
+    </div>
+    <h3>v-if com v-for</h3>
+
+        <p>Usar v-if e v-for juntos não é recomendado. Veja o guia de estilos para mais informações.</p>
+        <p>Quando utilizado em conjunto com v-for, este possui maior prioridade do que o v-if. Veja o guia de renderização de listas para mais detalhes.</p>
+    <script>
+    var exemplo1 = new Vue({
+        el:'#exemplo1',
+        data:{
+            legal_pra_carai:true
+        }
+    })
+    var exemplo2 = new Vue({
+        el:'#exemplo2',
+        data:{
+            mostrar_bloco:true
+        }
+    })
+    var exemplo3 = new Vue({
+        el:'#exemplo3',
+        data:{
+            mostrar_bloco:true
+        }
+    })
+    var exemplo4 = new Vue({
+        el:'#exemplo4',
+        data:{
+            type:'C'
+        }
+    })
+    var exemplo5 = new Vue({
+        el:'#exemplo5',
+        data:{
+            type:'C',
+            loginType:"username"
+        },
+        methods: {
+            troca_tipo:function(){
+                this.loginType = this.loginType ? "" : "username"
+            }
+        }
+    })
+    var exemplo6 = new Vue({
+        el:'#exemplo6',
+        data:{
+            ok:true,
+        },
+    })
+    </script>
+</body>
