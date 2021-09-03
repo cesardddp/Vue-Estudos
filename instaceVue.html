@@ -6,28 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vue-Teste</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue@next"></script>
 </head>
 <header>
-    <iframe src="./nav.html" frameborder="0" height="40px" width="100%"></iframe>
+    <iframe src="./nav.html" frameborder="0" height="100px" width="100%"></iframe>
 </header>
 <body>
-    <div id="app">
-        {{foo}}
-        <button @click="foo = 'baz'">muda foo</button>
-        
-    </div>
+    
     <script>
-
-        var obj = {
-            foo: 'bar'
-        }
-        <!-- Object.freeze(obj) -->
-        var app = new Vue({
-            el: '#app',
-            data: obj
-        })
+        const app = Vue.createApp({})
+        .component("Barra de busca",{})
+        .directive('focus',FocusEvent)
+        .use(LocalePlugin)
+        
+        
     </script>
 </body>
 
-</html>
+</html> 

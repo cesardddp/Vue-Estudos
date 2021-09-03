@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vue-Teste</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
 </head>
 <header>
-    <iframe src="./nav.html" frameborder="0" height="40px" width="100%"></iframe>
+    <iframe src="./nav.html" frameborder="0" height="100px" width="100%"></iframe>
 </header>
 
 <body>
@@ -99,11 +99,11 @@
     <script>
         var observadores = new Vue({
             el: '#observadores',
-            data:{
-                questão:"",
-                resposta:"Não posso responder até vc perguntar"
+            data: {
+                questão: "",
+                resposta: "Não posso responder até vc perguntar"
             },
-            watch:{
+            watch: {
                 // sempre que a pergunta mudar, essa função será executada
                 questão: function (novaQuestão, velhaQuestão) {
                     this.resposta = "esperando voce para de escrever"
@@ -120,9 +120,9 @@
                 // visite: https://lodash.com/docs#debounce
                 this.debouncedGetAnswer = _.debounce(this.getAnswer, 500)
             },
-            methods:{
+            methods: {
                 getAnswer: function () {
-                    if (this.questão.indexOf('?') === -1){
+                    if (this.questão.indexOf('?') === -1) {
                         this.resposta = 'perguntas precisam de interrogação'
                         return
                     }
@@ -130,7 +130,7 @@
                     var vmm = this
                     axios.get('https://yesno.wtf/api')
                         .then(function (response) {
-                            vmm.resposta = response.data.answer === 'yes' ? 'Sim.':
+                            vmm.resposta = response.data.answer === 'yes' ? 'Sim.' :
                                 response.data.answer === 'no' ? 'Não.' : 'Talvez!'
                         })
                         .cath(function (error) {
@@ -139,5 +139,6 @@
                 }
             }
         })
+        
     </script>
 </body>

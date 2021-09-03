@@ -6,80 +6,140 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vue-Teste</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
 </head>
 <header>
-    <iframe src="./nav.html" frameborder="0" height="40px" width="100%"></iframe>
+    <iframe src="./nav.html" frameborder="0" height="100px" width="100%"></iframe>
 </header>
+
 <body>
-    <div id="app">
-        {{mensagem}}
-        <br>
-        <span v-bind:title="mensagem2">
-            passe o mouse e nada acontece
+    <div id="counter">
+        <h3>Renderização Declarativa</h3>
+        Contador: {{counter}}
+    </div>
+
+    <div id="bind-attribute">
+        <h4>Bind de atributo</h4>
+        <span :title="mensagem">
+            Pare o mouse aqui
         </span>
-        <p v-if="seen">Agora você me viu</p>
+    </div>
+
+    <div id="event-handling">
+        <h3>Tratando Interação do Usuário</h3>
+        <p>{{ mensagem }}</p>
+        <button @click="reverseMessage">Inverter</button>
+    </div>
+    <br>
+    <div id="render-condicional">
+        <h3>Renderização Condicional</h3>
+        <span v-if="seen">Agora vc me vê</span>
+    </div>
+    <div id="list-rendering">
+        <h3>Renderização de Lista</h3>
         <ol>
-            <li v-for="todo in todos">
-                {{todo.text}}
+            <li v-for="item in todos">
+                {{ item.text }}
             </li>
         </ol>
-        <p>{{mensagem}}</p>
-        <button @click="reverseMessage">Inverter</button>
-        <input v-model="mensagem">
-        <hr>
-        <ol>
-            <!-- v-bind:todo="comida" -->
-            <todo-item
-
-             v-for="comida in comidas"
-             :todoo="comida"
-             :var_teste="teste_var"
-             :id="comida.id"
-
-            ></todo-item>
-        </ol>
-   
     </div>
+    <div id="list-comp">
+        <h3>composição</h3>
+        <ol>
+            <todo-item v-for="item in lista" :key="item.id" :todo="item"></todo-item>
+        </ol>
+    </div>
+  
     <script>
         var obj = {
-        foo: 'bar'
-    }
-        Vue.component('todo-item', {
-            props:['todoo','var_teste'],
-            template: '<li>{{ todoo.text + " - " + var_teste }}</li>'
-        })
-        Vue.component('todo-item', {
-       
-            data: obj,
-        
-            props:['todoo','var_teste'],
-            template: '<li>{{ todoo.text + " - " + var_teste }}</li>'
-        })
-        var app = new Vue({
-            el: '#app',
-            data: {
-                mensagem: 'Olá Vue!',
-                mensagem2:'Vc carregou essa pagina em '+ new Date().toLocaleDateString(),
-                seen: true,
-                todos:[
-                    { text:"teste texto" },
-                    { text:"teste texto" },
-                    { text:"teste texto" },
-                ],
-                teste_var:"isso é comida",
-                comidas:[
-                    {id:0,text:"bolacha"},
-                    {id:0,text:"cereja"},
-                    {id:0,text:"biscoito"}
-                ]
-            },
-            methods: {
-                reverseMessage: function () {
-                    this.mensagem = this.mensagem.split('').reverse().join('')
+            foo: 'bar'
+        }
+        const Counter = {
+            data() {
+                return {
+                    counter: 0,
+                    interval: 1000
                 }
             },
+            mounted() {
+                setInterval(() => {
+                    this.counter++
+                }, this.interval)
+            },
+            methods: {
+                parar() {
+                    this.interval = 0
+                }
+            },
+        }
+        Vue.createApp(Counter).mount('#counter')
+
+        const BindeDeAtributo = {
+            data() {
+                return {
+                    mensagem: ' Voce carregou essa página em ' + new Date().toLocaleDateString()
+                }
+            }
+        }
+        Vue.createApp(BindeDeAtributo).mount("#bind-attribute")
+        const app = Vue.createApp({
+            data() {
+                return {
+                    mensagem: " salve vuee"
+                }
+            },
+            methods: {
+                reverseMessage() {
+                    this.mensagem = this.mensagem
+                        .split('')
+                        .reverse()
+                        .join('')
+                }
+            }
+        }).mount('#event-handling')
+
+        const RenderCond = {
+            data() {
+                return {
+                    seen: true
+                }
+            }
+        }
+        Vue.createApp(RenderCond).mount("#render-listas")
+
+        const ListRender = {
+            data() {
+                return {
+                    todos: [
+                        { text: "teste texto" },
+                        { text: "teste texto" },
+                        { text: "teste texto" },
+
+                    ]
+                }
+            }
+        }
+        Vue.createApp(ListRender).mount('#list-rendering')
+
+        const TodoList = {
+            data() {
+                return {
+                    lista: [
+                        { id: 2341, text: "café" },
+                        { id: 230, text: "bolacha" },
+                        { id: 5530, text: "cereja" },
+                        { id: 0367, text: "biscoito" }
+                    ]
+                }
+            }
+        }
+        const list_comp = Vue.createApp(TodoList)
+        list_comp.component('todo-item', {
+            props: ['todo'],
+            template: `<li>Fazer: {{todo.text}}</li>`
         })
+        
+        list_comp.mount("#list-comp")
     </script>
 </body>
 
