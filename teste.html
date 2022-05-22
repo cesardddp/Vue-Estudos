@@ -1,0 +1,43 @@
+<div id="basic-event">
+    <button @click="counter += 1">Adicionar 1</button>
+    <p>O botão acima foi clicado {{counter}} vezes.</p>
+</div>
+
+<div id="event-with-method">
+    <!-- `greet` é o nome de um método definido abaixo -->
+    <button @click="greet">Cumprimentar</button>
+    <input type="date" v-model="dataa">
+    <div>{{dataa}}</div>
+</div>
+
+<script src="https://unpkg.com/vue@next"></script>
+
+<script>
+
+    const app = Vue.createApp({
+        data() {
+            return {
+                counter: 0
+            }
+        }
+    }).mount('#basic-event')
+
+    const app2 = Vue.createApp({
+        data() {
+            return {
+                name: 'Vue.js',
+                dataa:"1/12/2021"
+            }
+        },
+        methods: {
+            greet(event) {
+                // `this` dentro de métodos aponta para a atual instância Vue ativa
+                alert('Olá ' + this.name + '!')
+                // `event` é o evento DOM nativo
+                if (event) {
+                    alert(event.target.tagName)
+                }
+            }
+        }
+    }).mount('#event-with-method')
+</script>
